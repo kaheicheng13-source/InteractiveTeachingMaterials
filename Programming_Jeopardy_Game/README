@@ -1,1 +1,2 @@
 Programming Jeopardy Game is a web interface for users to learn basic JS knowledge with point-based system. It provides answer keys if clicking the wrong answers, so users can learn from mistakes.
+It reads columns and rows of CSV files to retrieve the questions and answers keys, so that the code can be customised to any other jeopardy games by editing the CSV file.
