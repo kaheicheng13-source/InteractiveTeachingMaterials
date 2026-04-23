@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Music Jeopardy</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Music Jeopardy</h1>
+      <div class="stats">Tiles solved: <span id="solvedCount">0</span> / 50</div>
+    </header>
+
+    <div id="grid" class="grid" aria-label="Jeopardy Board"></div>
+
+    <footer>
+      Question pool: <span id="poolCount">0</span> items • New questions first,
+      then recycles wrong ones if needed.
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="qTitle">
+    <div id="modalContent">
+      <div class="modalTop">
+        <h2 id="qTitle">Question</h2>
+        <button class="xbtn" title="Close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="questionText" class="question"></div>
+      <div id="choices" class="choices"></div>
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- Place script last with defer to ensure DOM is ready -->
+  <script defer src="sketch.js"></script>
+  <noscript>Please enable JavaScript to play.</noscript>
+</body>
+</html>
