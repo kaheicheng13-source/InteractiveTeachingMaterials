@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matchmaking Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Matchmaking Quiz</h1>
+      <p>Answer a few questions and get a playful “match” result.</p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <label for="name">Your name</label>
+        <input id="name" type="text" placeholder="e.g., Alex" />
+      </div>
+
+      <form id="quizForm">
+        <div id="questions"></div>
+
+        <div class="actions">
+          <button type="submit">Get Result</button>
+          <button type="button" id="resetBtn" class="secondary">Reset</button>
+        </div>
+      </form>
+
+      <div id="result" class="result" aria-live="polite"></div>
+      <div id="saved" class="saved" aria-live="polite"></div>
+    </section>
+
+    <footer class="footer">
+
+    </footer>
+  </main>
+
+  <script src="sketch.js"></script>
+</body>
+</html>
