@@ -1,0 +1,5 @@
+The web interface is designed around the playful concept of “you love me, you love me not.” As users click on individual flower petals, the system alternates between displaying “you love me” and “you love me not,” while also revealing different compliments for the recipient.
+
+Once all the petals have been clicked, pink bubbles emerge from the flower and a heart appears. Inside the heart, the message “I love you” is revealed. When the first petal is selected, a piece of music begins to play, enhancing the interactive experience.
+
+Users can further personalize the interface by customizing the sender and recipient names, selecting the music, and editing the compliments displayed throughout the interaction.
