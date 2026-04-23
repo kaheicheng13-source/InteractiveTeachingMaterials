@@ -1,0 +1,272 @@
+:root{
+  --bg: #0f1220;
+  --petal: #ffd7ea;
+  --petal2:#ffb9db;
+
+  --ink:#f7f7ff;
+  --muted:#cfd2ff;
+
+  --heartSolid: #ff2e86;
+
+  --safeTop: 64px;
+  --safeBottom: 72px;
+  --safeSide: 18px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  background: radial-gradient(1200px 900px at 50% 35%, #1b2050 0%, var(--bg) 55%, #070914 100%);
+  color: var(--ink);
+  overflow:hidden;
+}
+
+.ui{ position:fixed; inset:0; pointer-events:none; }
+.top-left{
+  position:absolute; top:14px; left:14px;
+  font-size:18px; font-weight:700;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.35);
+}
+.bottom-left{
+  position:absolute; bottom:14px; left:14px;
+  font-size:16px; font-weight:600;
+  color: var(--muted);
+  text-shadow: 0 1px 10px rgba(0,0,0,0.35);
+}
+
+.stage{
+  height:100%;
+  display:grid;
+  place-items:center;
+}
+
+.safe-area{
+  position:relative;
+  width:100%;
+  height:100%;
+  padding: var(--safeTop) var(--safeSide) var(--safeBottom) var(--safeSide);
+  display:grid;
+  place-items:center;
+}
+
+.flower-wrap{
+  position:relative;
+  width: min(78vmin, 560px);
+  height: min(78vmin, 560px);
+}
+
+.flower, .bubbles{
+  position:absolute;
+  inset:0;
+}
+.bubbles{ pointer-events:none; }
+
+/* Hard-centered container */
+.center-status{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index: 10;
+  pointer-events:none;
+  opacity:1;
+  transition: opacity 220ms ease;
+}
+.center-status.is-hidden{ opacity:0; }
+
+/* Actual pill */
+.center-status-pill{
+  display:inline-block;
+  font-size:18px;
+  font-weight:900;
+  text-transform:lowercase;
+  white-space:nowrap;
+
+  padding:10px 14px;
+  border-radius:999px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* Petals */
+.petal{
+  position:absolute;
+  left:50%; top:35%;
+  width: 22%;
+  height: 42%;
+  transform-origin: 50% 92%;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fff 0%, var(--petal) 38%, var(--petal2) 100%);
+  border: 2px solid rgba(255,127,186,0.55);
+  box-shadow:
+    0 18px 35px rgba(0,0,0,0.28),
+    inset 0 0 0 2px rgba(255,255,255,0.28);
+  cursor:pointer;
+  padding:0;
+  outline:none;
+  overflow:hidden;
+  transition: filter 220ms ease;
+}
+
+@keyframes floatJitter{
+  0%   { transform: translate(-50%,-50%) rotate(var(--a)) translateY(calc(-1 * var(--radius))) rotate(var(--tilt)); }
+  50%  { transform: translate(-50%,-50%) rotate(var(--a)) translateY(calc(-1 * var(--radius))) rotate(calc(var(--tilt) + 2deg)); }
+  100% { transform: translate(-50%,-50%) rotate(var(--a)) translateY(calc(-1 * var(--radius))) rotate(var(--tilt)); }
+}
+.petal.is-alive{
+  animation: floatJitter 3.2s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+.petal:hover{ filter: brightness(1.05) saturate(1.06); }
+.petal.is-clicked{ cursor: default; filter: saturate(0.9) brightness(0.99); }
+
+/* Compliment label (upright) */
+.petal-label{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: 84%;
+  text-align:center;
+
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #4b0b2b;
+
+  padding: 7px 9px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255,127,186,0.30);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+
+  opacity:0;
+  transform: translate(-50%,-50%) rotate(var(--labelCounter, 0deg));
+  animation: labelIn 260ms ease forwards;
+}
+@keyframes labelIn{
+  from{ opacity:0; transform: translate(-50%,-50%) rotate(var(--labelCounter, 0deg)) scale(0.92); }
+  to  { opacity:1; transform: translate(-50%,-50%) rotate(var(--labelCounter, 0deg)) scale(1); }
+}
+
+/* Bubbles: bigger, wider, flow longer */
+.bubble{
+  position:absolute;
+  width: 10px;
+  aspect-ratio:1/1;
+  border-radius:999px;
+
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,255,255,0.95),
+    rgba(255,154,205,0.95) 45%,
+    rgba(255,105,180,0.70) 100%
+  );
+
+  opacity: 0;
+  transform: translate(-50%,-50%) scale(0.6);
+
+  animation:
+    popWide var(--popDur, 950ms) ease-out forwards,
+    drift var(--driftDur, 2200ms) ease-in-out forwards;
+  animation-delay:
+    0ms,
+    var(--driftDelay, 180ms);
+}
+
+@keyframes popWide{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.30); }
+  12%  { opacity: 1; }
+  100% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1);
+  }
+}
+
+@keyframes drift{
+  0% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1);
+  }
+  55%{
+    opacity: 0.9;
+    transform: translate(
+      calc(-50% + var(--dx) + var(--fx)),
+      calc(-50% + var(--dy) + var(--fy))
+    ) scale(1.06);
+  }
+  100%{
+    opacity: 0;
+    filter: blur(0.8px);
+    transform: translate(
+      calc(-50% + var(--dx) + var(--fx2)),
+      calc(-50% + var(--dy) + var(--fy2))
+    ) scale(1.10);
+  }
+}
+
+/* End sequence */
+.flower-wrap.is-finished{
+  animation: vanish 700ms ease forwards;
+}
+@keyframes vanish{
+  to{ opacity:0; transform: scale(0.92); filter: blur(4px); }
+}
+
+/* Final heart */
+.final-heart{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  opacity:0;
+  transform: scale(0.96);
+  pointer-events:none;
+}
+.final-heart.is-show{
+  opacity:1;
+  transform: scale(1);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.heart-shape{
+  width: min(40vmin, 240px);
+  aspect-ratio: 1 / 1;
+  position:relative;
+  transform: rotate(-45deg);
+  background: var(--heartSolid);
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.35);
+}
+.heart-shape::before,
+.heart-shape::after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background: var(--heartSolid);
+  border-radius:50%;
+}
+.heart-shape::before{ top:-50%; left:0; }
+.heart-shape::after{ left:50%; top:0; }
+
+.heart-inside-text{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+  text-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  text-align:center;
+  width: min(60vmin, 320px);
+  pointer-events:none;
+}

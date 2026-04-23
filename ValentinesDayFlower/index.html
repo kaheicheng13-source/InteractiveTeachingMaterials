@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>13 Petal Love Flower</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <audio id="bgAudio" src="liebestraumShort.mp3" loop preload="auto"></audio>
+
+  <div class="ui">
+    <div class="top-left">Dear, My Love</div>
+    <div class="bottom-left">from Your Love</div>
+  </div>
+
+  <main class="stage" aria-label="Interactive flower">
+    <div id="safeArea" class="safe-area">
+      <div id="flowerWrap" class="flower-wrap">
+        <div id="flower" class="flower" role="group" aria-label="13 flower petals"></div>
+        <div id="bubbles" class="bubbles" aria-hidden="true"></div>
+
+       
+        <div id="statusText" class="center-status is-hidden" aria-live="polite">
+          <span class="center-status-pill" id="statusPillText"></span>
+        </div>
+      </div>
+
+      <div id="finalHeart" class="final-heart" aria-hidden="true">
+        <div class="heart-shape" aria-hidden="true"></div>
+        <div class="heart-inside-text">I Love You</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="sketch.js"></script>
+</body>
+</html>
