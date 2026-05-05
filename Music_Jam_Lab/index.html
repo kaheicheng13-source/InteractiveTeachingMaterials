@@ -153,6 +153,8 @@
     .file-card {
       display: grid;
       gap: 9px;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .file-card h3 {
@@ -163,7 +165,13 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 16px;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .file-top > div:first-child {
+      min-width: 0;
+      flex: 1;
     }
 
     .file-name {
@@ -173,7 +181,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 240px;
+      max-width: 100%;
     }
 
     .indicator {
@@ -190,6 +198,9 @@
     }
 
     .upload-label {
+      display: block;
+      width: 100%;
+      max-width: 100%;
       cursor: pointer;
       border: 1px dashed #cbd5e1;
       background: #f8fafc;
@@ -200,6 +211,9 @@
       font-weight: 700;
       font-size: 0.78rem;
       transition: 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .upload-label:hover {
@@ -211,6 +225,8 @@
     }
 
     button {
+      width: 100%;
+      max-width: 100%;
       border: none;
       border-radius: 12px;
       padding: 9px 11px;
@@ -220,6 +236,9 @@
       cursor: pointer;
       transition: 0.2s ease;
       font-size: 0.82rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     button:hover:not(:disabled) {
@@ -259,6 +278,38 @@
       border-radius: 18px;
       padding: 16px;
       font-size: 0.95rem;
+    }
+
+    .recording-buffers {
+      margin-top: 14px;
+    }
+
+    .recording-buffers h3 {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .buffer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+    }
+
+    .buffer-button {
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 0.76rem;
+      padding: 8px 9px;
+    }
+
+    .buffer-button.has-audio {
+      background: #111827;
+      color: white;
+    }
+
+    .buffer-button.playing {
+      background: var(--green);
+      color: white;
     }
 
     .signal-flow {
@@ -364,7 +415,7 @@
   <main>
     <section class="hero">
       <p class="eyebrow">Tone.js live processor</p>
-      <h1>Music Jam Lab</h1>
+      <h1>Eight-file audio mixer with live microphone recording</h1>
       <p>
         Upload eight audio files, process them in real time, enable microphone input, record live audio without playback during recording, and play the captured result afterward.
       </p>
@@ -373,7 +424,7 @@
         <div class="compact-flow" aria-label="Signal flow">
           <span>Files → File FX → Limiter → Speakers</span>
           <span>Mic → Mic FX → Limiter → Speakers</span>
-          <span>Mic → Recorder → Playback</span>
+          <span>Mic → Recorder → Buffers → Mic FX → Limiter → Speakers</span>
         </div>
       </div>
     </section>
@@ -383,7 +434,7 @@
     <section class="grid-1">
       <div class="card">
         <h2>Microphone and Recording</h2>
-        <p style="color: var(--muted);">Microphone input has its own separate effects chain below.</p>
+        <p style="color: var(--muted);">Microphone input and saved recording buffers use the separate microphone/recording effects chain below.</p>
 
         <div class="button-row">
           <button id="mic-button">Turn Mic On</button>
@@ -393,6 +444,11 @@
 
         <div class="info-box">
           Recording captures microphone input only. The recorded clip is not played while recording, which helps prevent a feedback loop. For live microphone processing, headphones are strongly recommended.
+        </div>
+
+        <div class="recording-buffers">
+          <h3>Saved Recording Buffers</h3>
+          <div class="buffer-grid" id="recording-buffer-buttons"></div>
         </div>
       </div>
     </section>
@@ -413,7 +469,7 @@
         <div class="panel-header">
           <div>
             <h2>Microphone Signal Processing</h2>
-            <p>These sliders affect live microphone monitoring only, separate from file playback effects.</p>
+            <p>These sliders affect live microphone monitoring and saved recording buffer playback, separate from file playback effects.</p>
           </div>
           <button class="secondary" id="reset-mic-effects">Reset</button>
         </div>
@@ -481,8 +537,12 @@
     const micEffects = { ...EFFECT_DEFAULTS };
 
     const AUDIO_FILE_COUNT = 8;
+    const RECORDING_BUFFER_COUNT = 8;
     const players = Array(AUDIO_FILE_COUNT).fill(null);
     const filePlaying = Array(AUDIO_FILE_COUNT).fill(false);
+    const recordingBuffers = Array(RECORDING_BUFFER_COUNT).fill(null);
+    const recordingBufferPlayers = Array(RECORDING_BUFFER_COUNT).fill(null);
+    let nextRecordingBufferIndex = 0;
 
     let fileRack;
     let micRack;
@@ -904,6 +964,153 @@
       }
     }
 
+    function findAvailableRecordingBufferIndex() {
+      const emptyIndex = recordingBuffers.findIndex((buffer) => buffer === null);
+      if (emptyIndex !== -1) return emptyIndex;
+
+      const index = nextRecordingBufferIndex;
+      nextRecordingBufferIndex = (nextRecordingBufferIndex + 1) % recordingBuffers.length;
+      return index;
+    }
+
+    function updateRecordingBufferButton(index) {
+      const playButton = document.getElementById(`play-buffer-${index}`);
+      const deleteButton = document.getElementById(`delete-buffer-${index}`);
+      const label = document.getElementById(`buffer-label-${index}`);
+
+      if (!playButton || !deleteButton || !label) return;
+
+      if (recordingBuffers[index]) {
+        playButton.disabled = false;
+        deleteButton.disabled = false;
+        label.textContent = recordingBuffers[index].name;
+      } else {
+        playButton.disabled = true;
+        deleteButton.disabled = true;
+        playButton.textContent = `Play Buffer ${index + 1}`;
+        playButton.classList.remove("green");
+        label.textContent = "Empty";
+      }
+    }
+
+    function saveRecordingToBuffer(blob) {
+      const index = findAvailableRecordingBufferIndex();
+
+      if (recordingBufferPlayers[index]) {
+        recordingBufferPlayers[index].stop();
+        recordingBufferPlayers[index].dispose();
+        recordingBufferPlayers[index] = null;
+      }
+
+      const url = URL.createObjectURL(blob);
+      recordingBuffers[index] = {
+        blob,
+        url,
+        name: `Recording Buffer ${index + 1}`
+      };
+
+      const player = new Tone.Player({
+        url,
+        loop: false,
+        autostart: false,
+        onstop: () => {
+          const playButton = document.getElementById(`play-buffer-${index}`);
+          if (playButton) {
+            playButton.textContent = `Play Buffer ${index + 1}`;
+            playButton.classList.remove("green");
+          }
+        }
+      });
+
+      player.connect(micRack.input);
+      recordingBufferPlayers[index] = player;
+      nextRecordingBufferIndex = (index + 1) % recordingBuffers.length;
+      updateRecordingBufferButton(index);
+      setStatus(`Recording saved to buffer ${index + 1}.`, true);
+    }
+
+    async function toggleRecordingBufferPlayback(index) {
+      await Tone.start();
+      await Tone.context.resume();
+
+      // When playing any saved buffer, turn off live microphone monitoring first.
+      // This helps prevent the buffer playback from entering the mic and causing feedback.
+      if (micOn && mic) {
+        mic.close();
+        mic.dispose();
+        mic = null;
+        micOn = false;
+        micButton.textContent = "Turn Mic On";
+        micButton.classList.remove("green");
+        recordButton.disabled = true;
+      }
+
+      const player = recordingBufferPlayers[index];
+      const playButton = document.getElementById(`play-buffer-${index}`);
+
+      if (!player || !recordingBuffers[index]) {
+        setStatus(`Buffer ${index + 1} is empty.`);
+        return;
+      }
+
+      if (player.state === "started") {
+        player.stop();
+        if (playButton) {
+          playButton.textContent = `Play Buffer ${index + 1}`;
+          playButton.classList.remove("green");
+        }
+        setStatus(`Stopped buffer ${index + 1}.`);
+      } else {
+        player.start();
+        if (playButton) {
+          playButton.textContent = `Stop Buffer ${index + 1}`;
+          playButton.classList.add("green");
+        }
+        setStatus(`Playing buffer ${index + 1} through microphone/recording effects. Microphone is off to prevent feedback.`, true);
+      }
+    }
+
+    function deleteRecordingBuffer(index) {
+      if (recordingBufferPlayers[index]) {
+        recordingBufferPlayers[index].stop();
+        recordingBufferPlayers[index].dispose();
+        recordingBufferPlayers[index] = null;
+      }
+
+      if (recordingBuffers[index]?.url) {
+        URL.revokeObjectURL(recordingBuffers[index].url);
+      }
+
+      recordingBuffers[index] = null;
+      nextRecordingBufferIndex = index;
+      updateRecordingBufferButton(index);
+      setStatus(`Buffer ${index + 1} deleted. The next saved recording will use this space.`, true);
+    }
+
+    function createRecordingBufferButtons() {
+      const container = document.getElementById("recording-buffer-buttons");
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      for (let index = 0; index < recordingBuffers.length; index++) {
+        const bufferCard = document.createElement("div");
+        bufferCard.className = "buffer-card";
+        bufferCard.innerHTML = `
+          <div class="buffer-top">
+            <strong>Buffer ${index + 1}</strong>
+            <span id="buffer-label-${index}">Empty</span>
+          </div>
+          <button class="buffer-button" id="play-buffer-${index}" disabled>Play Buffer ${index + 1}</button>
+          <button class="buffer-button secondary" id="delete-buffer-${index}" disabled>Delete</button>
+        `;
+        container.appendChild(bufferCard);
+
+        document.getElementById(`play-buffer-${index}`).addEventListener("click", () => toggleRecordingBufferPlayback(index));
+        document.getElementById(`delete-buffer-${index}`).addEventListener("click", () => deleteRecordingBuffer(index));
+      }
+    }
+
     function resetSliders(parentId, effectObject, rack) {
       Object.keys(EFFECT_DEFAULTS).forEach((key) => {
         effectObject[key] = 0;
@@ -1038,6 +1245,7 @@
         safeRamp(recordingInputGain.gain, 0, 0.2);
         await wait(220);
         const blob = await recorder.stop();
+        const keepRecording = window.confirm("Do you want to keep this recording in one of the 8 recording buffers?");
         const url = URL.createObjectURL(blob);
 
         if (recordedPlayer) {
@@ -1058,7 +1266,7 @@
           }
         });
 
-        recordedPlayer.connect(recordingSafetyOutput.input);
+        recordedPlayer.connect(micRack.input);
 
         isRecording = false;
         hasRecording = true;
@@ -1066,7 +1274,11 @@
         recordButton.classList.remove("red");
         recordButton.disabled = false;
         playRecordingButton.disabled = false;
-        setStatus("Recording saved. Playback is ready.", true);
+        if (keepRecording) {
+          saveRecordingToBuffer(blob);
+        } else {
+          setStatus("Recording discarded. Playback is still ready temporarily in the main playback button.", true);
+        }
         return;
       }
 
@@ -1105,6 +1317,18 @@
       await Tone.start();
       await Tone.context.resume();
 
+      // When playing the recorded clip, turn off live microphone monitoring first.
+      // This helps prevent speaker playback from entering the mic again.
+      if (micOn && mic) {
+        mic.close();
+        mic.dispose();
+        mic = null;
+        micOn = false;
+        micButton.textContent = "Turn Mic On";
+        micButton.classList.remove("green");
+        recordButton.disabled = true;
+      }
+
       if (!recordedPlayer || !recordedPlayer.loaded || isRecording) {
         setStatus("Recording is not ready yet.");
         return;
@@ -1121,7 +1345,7 @@
         isRecordingPlaying = true;
         playRecordingButton.textContent = "Stop Playback";
         playRecordingButton.classList.add("green");
-        setStatus("Playing recorded audio.", true);
+        setStatus("Playing recorded audio. Microphone is off to prevent feedback.", true);
       }
     }
 
@@ -1141,6 +1365,7 @@
       applyEffectValues(micRack, micEffects);
 
       createFileDecks();
+      createRecordingBufferButtons();
       createSliders("file-sliders", fileEffects, () => applyEffectValues(fileRack, fileEffects));
       createSliders("mic-sliders", micEffects, () => applyEffectValues(micRack, micEffects));
 
