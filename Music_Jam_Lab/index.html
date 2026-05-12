@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tone.js Audio Processor</title>
+  <title>Tone.js Eight-File Audio Processor</title>
 
-  <!-- Tone.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
   <style>
@@ -21,9 +20,7 @@
       --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -33,86 +30,77 @@
     }
 
     main {
-      width: min(1300px, calc(100% - 32px));
+      width: min(1320px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 32px 0;
+      padding: 20px 0;
     }
 
     .hero,
     .card {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 18px;
       box-shadow: var(--shadow);
     }
 
     .hero {
-      padding: 20px;
-      margin-bottom: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
     }
 
     .eyebrow {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       color: var(--muted);
       text-transform: uppercase;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(1.45rem, 3vw, 2.5rem);
+      font-size: clamp(1.45rem, 3vw, 2.45rem);
       line-height: 1.08;
       letter-spacing: -0.04em;
     }
 
-    h2,
-    h3 {
-      margin: 0;
-    }
+    h2 { margin: 0; font-size: 1.05rem; }
+    h3 { margin: 0; }
+    p { line-height: 1.45; }
 
-    p {
-      line-height: 1.55;
-    }
-
-    .hero p:last-child {
-      max-width: 850px;
+    .hero p.description {
+      max-width: 880px;
       color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 0;
-    }
-
-    .status {
-      margin-top: 12px;
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 12px;
-      background: #f1f5f9;
-      color: #475569;
-      font-weight: 700;
-      font-size: 0.82rem;
-    }
-
-    .status.active {
-      background: #dcfce7;
-      color: #166534;
+      font-size: 0.88rem;
+      margin: 8px 0 0;
     }
 
     .hero-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 12px;
+      margin-top: 10px;
     }
+
+    .status {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
+    .status.active { background: #dcfce7; color: #166534; }
 
     .compact-flow {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: #475569;
       font-weight: 700;
     }
@@ -121,63 +109,56 @@
       border: 1px solid var(--line);
       background: #f8fafc;
       border-radius: 999px;
-      padding: 6px 9px;
+      padding: 5px 8px;
       white-space: nowrap;
     }
 
-    .grid-3 {
+    .grid-files {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 14px;
     }
 
     .grid-1 {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 14px;
     }
 
-    .card {
-      padding: 16px;
-    }
+    .card { padding: 14px; }
 
     .file-card {
       display: grid;
-      gap: 9px;
+      gap: 8px;
       min-width: 0;
       overflow: hidden;
     }
 
-    .file-card h3 {
-      font-size: 0.95rem;
-    }
+    .file-card h3 { font-size: 0.9rem; }
 
     .file-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       min-width: 0;
     }
 
-    .file-top > div:first-child {
-      min-width: 0;
-      flex: 1;
-    }
+    .file-top > div:first-child { min-width: 0; flex: 1; }
 
     .file-name {
       margin: 3px 0 0;
       color: var(--muted);
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -185,227 +166,195 @@
     }
 
     .indicator {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 999px;
       background: #cbd5e1;
-      margin-top: 5px;
+      margin-top: 4px;
       flex: 0 0 auto;
     }
 
-    .indicator.green {
-      background: var(--green);
+    .indicator.green { background: var(--green); }
+
+    .upload-label,
+    button {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 11px;
+      padding: 8px 9px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .upload-label {
       display: block;
-      width: 100%;
-      max-width: 100%;
       cursor: pointer;
       border: 1px dashed #cbd5e1;
       background: #f8fafc;
       color: #334155;
-      border-radius: 12px;
-      padding: 10px;
       text-align: center;
-      font-weight: 700;
-      font-size: 0.78rem;
       transition: 0.2s ease;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .upload-label:hover {
-      background: #f1f5f9;
-    }
-
-    input[type="file"] {
-      display: none;
-    }
+    .upload-label:hover { background: #f1f5f9; }
+    input[type="file"] { display: none; }
 
     button {
-      width: 100%;
-      max-width: 100%;
       border: none;
-      border-radius: 12px;
-      padding: 9px 11px;
       background: var(--dark);
       color: white;
-      font-weight: 700;
       cursor: pointer;
       transition: 0.2s ease;
-      font-size: 0.82rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      filter: brightness(1.08);
-    }
-
-    button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    button.green {
-      background: var(--green);
-    }
-
-    button.red {
-      background: var(--red);
-    }
-
-    button.secondary {
-      background: #e2e8f0;
-      color: #0f172a;
-    }
+    button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    button.green { background: var(--green); }
+    button.red { background: var(--red); }
+    button.secondary { background: #e2e8f0; color: #0f172a; }
+    button.loop-on { background: #2563eb; }
 
     .button-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 18px;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
     }
 
     .info-box {
-      margin-top: 18px;
+      margin-top: 10px;
       background: #f8fafc;
       color: var(--muted);
-      border-radius: 18px;
-      padding: 16px;
-      font-size: 0.95rem;
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 0.78rem;
     }
+
+    .recording-buffer-section { margin-top: 12px; }
+    .recording-buffer-section h3 { font-size: 0.92rem; margin-bottom: 4px; }
+    .recording-buffer-section p { margin: 0 0 8px; color: var(--muted); font-size: 0.74rem; }
 
     .recording-buffers {
-      margin-top: 14px;
-    }
-
-    .recording-buffers h3 {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-    }
-
-    .buffer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
       gap: 8px;
     }
 
-    .buffer-button {
-      background: #e2e8f0;
-      color: #0f172a;
-      font-size: 0.76rem;
-      padding: 8px 9px;
-    }
-
-    .buffer-button.has-audio {
-      background: #111827;
-      color: white;
-    }
-
-    .buffer-button.playing {
-      background: var(--green);
-      color: white;
-    }
-
-    .signal-flow {
+    .buffer-card {
       display: grid;
-      gap: 7px;
-      margin-top: 10px;
+      gap: 6px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 8px;
+      min-width: 0;
+      overflow: hidden;
     }
 
-    .flow-item {
-      background: #f8fafc;
-      color: #475569;
-      border-radius: 12px;
-      padding: 8px 10px;
-      font-weight: 700;
-      font-size: 0.78rem;
+    .buffer-top { display: grid; gap: 2px; min-width: 0; }
+    .buffer-top strong { font-size: 0.76rem; }
+    .buffer-top span {
+      color: var(--muted);
+      font-size: 0.68rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .panel-header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .panel-header p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+    .panel-header p { margin: 5px 0 0; color: var(--muted); font-size: 0.78rem; }
 
     .sliders {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 8px;
     }
 
     .slider-card {
       display: grid;
-      gap: 10px;
-      padding: 14px;
+      gap: 7px;
+      padding: 9px;
       border: 1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.82);
     }
 
     .slider-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
     }
 
-    .slider-card span:first-child {
-      color: #334155;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
+    .slider-card span:first-child { color: #334155; font-weight: 700; font-size: 0.78rem; }
     .value-pill {
       background: #f1f5f9;
       color: #475569;
       border-radius: 999px;
-      padding: 5px 8px;
-      font-size: 0.78rem;
+      padding: 4px 7px;
+      font-size: 0.68rem;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
 
-    input[type="range"] {
-      width: 100%;
-      accent-color: #111827;
-    }
+    input[type="range"] { width: 100%; accent-color: #111827; }
 
     .record-icon {
       display: inline-block;
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: currentColor;
-      margin-right: 8px;
+      margin-right: 6px;
       vertical-align: -1px;
     }
 
+    .master-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .master-controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .master-volume-card {
+      display: grid;
+      gap: 7px;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
     @media (max-width: 900px) {
-      .grid-3,
       .grid-2,
       .grid-1,
       .sliders,
-      .button-row {
+      .button-row,
+      .master-grid,
+      .master-controls {
         grid-template-columns: 1fr;
-      }
-
-      .hero,
-      .card {
-        border-radius: 18px;
       }
     }
   </style>
@@ -416,39 +365,66 @@
     <section class="hero">
       <p class="eyebrow">Tone.js live processor</p>
       <h1>Music Jam Lab</h1>
-      <p>
-        Upload eight audio files, process them in real time, enable microphone input, record live audio without playback during recording, and play the captured result afterward.
+      <p class="description">
+        Upload eight audio files, process files and microphone/recording buffers separately in real time, record live mic input, save buffers, loop players, and capture the full jam from the master track.
       </p>
       <div class="hero-footer">
         <div id="status" class="status">Upload audio or enable the microphone to begin.</div>
         <div class="compact-flow" aria-label="Signal flow">
-          <span>Files → File FX → Limiter → Speakers</span>
-          <span>Mic → Mic FX → Limiter → Speakers</span>
-          <span>Mic → Recorder → Buffers → Mic FX → Limiter → Speakers</span>
+          <span>Files → File FX → Master</span>
+          <span>Mic/Buffers → Mic FX → Master</span>
+          <span>Master → Volume → Limiter → Speakers</span>
+          <span>Master → Recorder → Save</span>
         </div>
       </div>
     </section>
 
-    <section class="grid-3" id="file-decks"></section>
+    <section class="grid-files" id="file-decks"></section>
+
+    <section class="grid-1">
+      <div class="card">
+        <div class="master-grid">
+          <div>
+            <h2>Master Track</h2>
+            <p style="color: var(--muted); font-size: 0.78rem; margin: 6px 0 0;">
+              Records the full jam mix from all uploaded files, microphone monitoring, and recording buffers after their effect chains.
+            </p>
+            <div class="master-controls">
+              <button id="master-record-button"><span class="record-icon"></span>Record Master</button>
+              <button id="master-stop-button" disabled>Stop Master</button>
+              <button id="master-save-button" disabled>Save Master WAV</button>
+            </div>
+          </div>
+          <div class="master-volume-card">
+            <div class="slider-top">
+              <strong>Master Volume</strong>
+              <span class="value-pill" id="master-volume-value">80%</span>
+            </div>
+            <input id="master-volume" type="range" min="0" max="1.25" step="0.01" value="0.8" />
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="grid-1">
       <div class="card">
         <h2>Microphone and Recording</h2>
-        <p style="color: var(--muted);">Microphone input and saved recording buffers use the separate microphone/recording effects chain below.</p>
+        <p style="color: var(--muted); font-size: 0.78rem; margin: 6px 0 0;">Microphone input and saved recording buffers use the separate microphone/recording effects chain below.</p>
 
         <div class="button-row">
           <button id="mic-button">Turn Mic On</button>
           <button id="record-button" disabled><span class="record-icon"></span>Record</button>
-          <button id="play-recording-button" disabled>Play Recording</button>
+          <button id="play-recording-button" disabled>Play Latest Recording</button>
         </div>
 
         <div class="info-box">
-          Recording captures microphone input only. The recorded clip is not played while recording, which helps prevent a feedback loop. For live microphone processing, headphones are strongly recommended.
+          After pressing Record, a 3–1 countdown appears. The recording input fades in and out over 0.2 seconds. Playback buttons automatically turn off live mic monitoring to reduce feedback.
         </div>
 
-        <div class="recording-buffers">
-          <h3>Saved Recording Buffers</h3>
-          <div class="buffer-grid" id="recording-buffer-buttons"></div>
+        <div class="recording-buffer-section">
+          <h3>Recording Buffers</h3>
+          <p>After each recording, choose whether to keep it. Saved recordings fill the first available empty buffer. Each buffer can be played, looped, or deleted.</p>
+          <div class="recording-buffers" id="recording-buffer-buttons"></div>
         </div>
       </div>
     </section>
@@ -468,8 +444,8 @@
       <div class="card">
         <div class="panel-header">
           <div>
-            <h2>Microphone Signal Processing</h2>
-            <p>These sliders affect live microphone monitoring and saved recording buffer playback, separate from file playback effects.</p>
+            <h2>Microphone / Recording Buffer Signal Processing</h2>
+            <p>These sliders affect live microphone monitoring, latest recording playback, and saved buffer playback.</p>
           </div>
           <button class="secondary" id="reset-mic-effects">Reset</button>
         </div>
@@ -479,6 +455,9 @@
   </main>
 
   <script>
+    const AUDIO_FILE_COUNT = 8;
+    const RECORDING_BUFFER_COUNT = 8;
+
     const EFFECT_DEFAULTS = {
       ring: 0,
       feedback: 0,
@@ -490,7 +469,6 @@
       eqLow: 0,
       eqMid: 0,
       eqHigh: 0,
-
       distortion: 0,
       bitCrusher: 0,
       chorus: 0,
@@ -498,7 +476,7 @@
       tremolo: 0,
       vibrato: 0,
       autoWah: 0,
-      frequencyShifter: 0,
+      frequencyShift: 0,
       pitchShift: 0,
       stereoWidener: 0,
       chebyshev: 0,
@@ -508,16 +486,15 @@
 
     const EFFECT_LABELS = {
       ring: "Ring Modulation",
-      feedback: "Feedback",
-      echo: "Echo",
+      feedback: "Feedback Delay",
+      echo: "Echo / Ping Pong",
       delay: "Delay",
       reverb: "Reverb",
-      reverse: "Reverse / Invert",
+      reverse: "Invert Phase",
       comb: "Comb Filter",
       eqLow: "EQ Low",
       eqMid: "EQ Mid",
       eqHigh: "EQ High",
-
       distortion: "Distortion",
       bitCrusher: "BitCrusher",
       chorus: "Chorus",
@@ -525,23 +502,24 @@
       tremolo: "Tremolo",
       vibrato: "Vibrato",
       autoWah: "AutoWah",
-      frequencyShifter: "Frequency Shifter",
+      frequencyShift: "Frequency Shifter",
       pitchShift: "Pitch Shift",
       stereoWidener: "Stereo Widener",
       chebyshev: "Chebyshev",
       freeverb: "Freeverb",
-      jcReverb: "JCReverb"
+      jcReverb: "JC Reverb"
     };
 
     const fileEffects = { ...EFFECT_DEFAULTS };
     const micEffects = { ...EFFECT_DEFAULTS };
 
-    const AUDIO_FILE_COUNT = 8;
-    const RECORDING_BUFFER_COUNT = 8;
     const players = Array(AUDIO_FILE_COUNT).fill(null);
     const filePlaying = Array(AUDIO_FILE_COUNT).fill(false);
+    const fileLooping = Array(AUDIO_FILE_COUNT).fill(false);
+
     const recordingBuffers = Array(RECORDING_BUFFER_COUNT).fill(null);
     const recordingBufferPlayers = Array(RECORDING_BUFFER_COUNT).fill(null);
+    const recordingBufferLooping = Array(RECORDING_BUFFER_COUNT).fill(false);
     let nextRecordingBufferIndex = 0;
 
     let fileRack;
@@ -549,7 +527,6 @@
     let mic;
     let recorder;
     let recordedPlayer;
-    let recordingSafetyOutput;
     let recordingInputGain;
     let countdownInProgress = false;
     let micOn = false;
@@ -557,10 +534,24 @@
     let hasRecording = false;
     let isRecordingPlaying = false;
 
+    let masterInput;
+    let masterVolume;
+    let masterLimiter;
+    let masterRecorder;
+    let masterRecorderGain;
+    let masterRecording = false;
+    let masterRecordingBlob = null;
+    let masterRecordingUrl = null;
+
     const statusEl = document.getElementById("status");
     const micButton = document.getElementById("mic-button");
     const recordButton = document.getElementById("record-button");
     const playRecordingButton = document.getElementById("play-recording-button");
+    const masterRecordButton = document.getElementById("master-record-button");
+    const masterStopButton = document.getElementById("master-stop-button");
+    const masterSaveButton = document.getElementById("master-save-button");
+    const masterVolumeSlider = document.getElementById("master-volume");
+    const masterVolumeValue = document.getElementById("master-volume-value");
 
     function setStatus(message, active = false) {
       statusEl.textContent = message;
@@ -571,14 +562,13 @@
       return Math.max(min, Math.min(max, value));
     }
 
-    function safeRamp(param, value, time = 0.05) {
-      // Some Tone.js properties are AudioParams/Signals, while others are plain numbers.
-      // This helper only ramps real parameter objects and safely ignores primitive values.
-      if (param === undefined || param === null) return;
+    function wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
 
-      if (typeof param === "number") return;
-      if (typeof param === "string") return;
-      if (typeof param === "boolean") return;
+    function safeRamp(param, value, time = 0.05) {
+      if (param === undefined || param === null) return;
+      if (typeof param === "number" || typeof param === "string" || typeof param === "boolean") return;
 
       if (typeof param.rampTo === "function") {
         param.rampTo(value, time);
@@ -587,38 +577,31 @@
       }
     }
 
-    function wait(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-
     function forceWet(effect) {
-      if (!effect) return;
+      if (!effect || typeof effect !== "object") return;
       if (effect.wet) safeRamp(effect.wet, 1, 0.01);
     }
 
-    function connectWetPath(input, effect, wetGain, eq) {
+    function connectWetPath(input, effect, wetGain, sum) {
       if (!effect || !wetGain) return;
       forceWet(effect);
       input.connect(effect);
       effect.connect(wetGain);
-      wetGain.connect(eq);
+      wetGain.connect(sum);
     }
 
-    function createSafetyOutput() {
-      const input = new Tone.Gain(0.8);
-      const limiter = new Tone.Limiter(-1);
-      const output = new Tone.Gain(1).toDestination();
-
-      input.connect(limiter);
-      limiter.connect(output);
-
-      return { input, limiter, output };
+    function createOptionalEffect(Constructor, args = []) {
+      try {
+        if (!Constructor) return null;
+        return new Constructor(...args);
+      } catch (error) {
+        return null;
+      }
     }
 
     function createEffectRack() {
       const input = new Tone.Gain(1);
-      const safetyOutput = createSafetyOutput();
-      const output = safetyOutput.input;
+      const sum = new Tone.Gain(1);
       const dry = new Tone.Gain(1);
 
       const ringMod = new Tone.Gain(0);
@@ -643,102 +626,90 @@
       const comb = new Tone.FeedbackCombFilter(0.08, 0.1);
       const combWet = new Tone.Gain(0);
 
-      const distortion = new Tone.Distortion(0.4);
+      const distortion = createOptionalEffect(Tone.Distortion, [0.2]);
       const distortionWet = new Tone.Gain(0);
 
-      const bitCrusher = new Tone.BitCrusher(4);
+      const bitCrusher = createOptionalEffect(Tone.BitCrusher, [4]);
       const bitCrusherWet = new Tone.Gain(0);
 
-      const chorus = new Tone.Chorus(4, 2.5, 0.5).start();
+      const chorus = createOptionalEffect(Tone.Chorus, [4, 2.5, 0.5]);
       const chorusWet = new Tone.Gain(0);
+      chorus?.start?.();
 
-      const phaser = new Tone.Phaser({ frequency: 0.5, octaves: 3, baseFrequency: 350 });
+      const phaser = createOptionalEffect(Tone.Phaser, [{ frequency: 0.5, octaves: 3, baseFrequency: 350 }]);
       const phaserWet = new Tone.Gain(0);
 
-      const tremolo = new Tone.Tremolo(8, 0.7).start();
+      const tremolo = createOptionalEffect(Tone.Tremolo, [8, 0.7]);
       const tremoloWet = new Tone.Gain(0);
+      tremolo?.start?.();
 
-      const vibrato = new Tone.Vibrato(5, 0.1);
+      const vibrato = createOptionalEffect(Tone.Vibrato, [5, 0.1]);
       const vibratoWet = new Tone.Gain(0);
 
-      const autoWah = new Tone.AutoWah(50, 6, -30);
+      const autoWah = createOptionalEffect(Tone.AutoWah, [50, 6, -30]);
       const autoWahWet = new Tone.Gain(0);
 
-      const frequencyShifter = new Tone.FrequencyShifter(0);
-      const frequencyShifterWet = new Tone.Gain(0);
+      const frequencyShifter = createOptionalEffect(Tone.FrequencyShifter, [0]);
+      const frequencyShiftWet = new Tone.Gain(0);
 
-      const pitchShift = new Tone.PitchShift(0);
+      const pitchShift = createOptionalEffect(Tone.PitchShift, [0]);
       const pitchShiftWet = new Tone.Gain(0);
 
-      const stereoWidener = new Tone.StereoWidener(0);
+      const stereoWidener = createOptionalEffect(Tone.StereoWidener, [0]);
       const stereoWidenerWet = new Tone.Gain(0);
 
-      const chebyshev = new Tone.Chebyshev(20);
+      const chebyshev = createOptionalEffect(Tone.Chebyshev, [1]);
       const chebyshevWet = new Tone.Gain(0);
 
-      const freeverb = new Tone.Freeverb(0.7, 3000);
+      const freeverb = createOptionalEffect(Tone.Freeverb, [0.4, 3000]);
       const freeverbWet = new Tone.Gain(0);
 
-      const jcReverb = new Tone.JCReverb(0.4);
+      const jcReverb = createOptionalEffect(Tone.JCReverb, [0.4]);
       const jcReverbWet = new Tone.Gain(0);
 
       const eq = new Tone.EQ3(0, 0, 0);
 
-      // Safety stage before audio output. This helps prevent harsh clipping when effects stack.
-      const preSafetyGain = new Tone.Gain(0.8);
-      const normalizer = new Tone.Compressor({ threshold: -18, ratio: 8, attack: 0.003, release: 0.25 });
-      const limiter = new Tone.Limiter(-1);
-
-      // Dry path. This always remains open so all effects at 0 means raw sound only.
       input.connect(dry);
-      dry.connect(eq);
+      dry.connect(sum);
 
-      // Ring modulation wet path.
-      // The oscillator controls the gain amount, which creates amplitude/ring modulation.
       input.connect(ringMod);
       ringOsc.connect(ringMod.gain);
       ringMod.connect(ringWet);
-      ringWet.connect(eq);
+      ringWet.connect(sum);
 
-      // Original requested wet paths.
-      connectWetPath(input, feedbackDelay, feedbackWet, eq);
-      connectWetPath(input, echo, echoWet, eq);
+      connectWetPath(input, feedbackDelay, feedbackWet, sum);
+      connectWetPath(input, echo, echoWet, sum);
       input.connect(delay);
       delay.connect(delayWet);
-      delayWet.connect(eq);
-      connectWetPath(input, reverb, reverbWet, eq);
+      delayWet.connect(sum);
+      connectWetPath(input, reverb, reverbWet, sum);
       input.connect(invert);
       invert.connect(invertWet);
-      invertWet.connect(eq);
-      connectWetPath(input, comb, combWet, eq);
+      invertWet.connect(sum);
+      connectWetPath(input, comb, combWet, sum);
 
-      // Additional Tone.js effect wet paths.
-      connectWetPath(input, distortion, distortionWet, eq);
-      connectWetPath(input, bitCrusher, bitCrusherWet, eq);
-      connectWetPath(input, chorus, chorusWet, eq);
-      connectWetPath(input, phaser, phaserWet, eq);
-      connectWetPath(input, tremolo, tremoloWet, eq);
-      connectWetPath(input, vibrato, vibratoWet, eq);
-      connectWetPath(input, autoWah, autoWahWet, eq);
-      connectWetPath(input, frequencyShifter, frequencyShifterWet, eq);
-      connectWetPath(input, pitchShift, pitchShiftWet, eq);
-      connectWetPath(input, stereoWidener, stereoWidenerWet, eq);
-      connectWetPath(input, chebyshev, chebyshevWet, eq);
-      connectWetPath(input, freeverb, freeverbWet, eq);
-      connectWetPath(input, jcReverb, jcReverbWet, eq);
+      connectWetPath(input, distortion, distortionWet, sum);
+      connectWetPath(input, bitCrusher, bitCrusherWet, sum);
+      connectWetPath(input, chorus, chorusWet, sum);
+      connectWetPath(input, phaser, phaserWet, sum);
+      connectWetPath(input, tremolo, tremoloWet, sum);
+      connectWetPath(input, vibrato, vibratoWet, sum);
+      connectWetPath(input, autoWah, autoWahWet, sum);
+      connectWetPath(input, frequencyShifter, frequencyShiftWet, sum);
+      connectWetPath(input, pitchShift, pitchShiftWet, sum);
+      connectWetPath(input, stereoWidener, stereoWidenerWet, sum);
+      connectWetPath(input, chebyshev, chebyshevWet, sum);
+      connectWetPath(input, freeverb, freeverbWet, sum);
+      connectWetPath(input, jcReverb, jcReverbWet, sum);
 
-      eq.connect(preSafetyGain);
-      preSafetyGain.connect(normalizer);
-      normalizer.connect(limiter);
-      limiter.connect(output);
+      sum.connect(eq);
+      eq.connect(masterInput);
 
       return {
         input,
-        output,
-        safetyOutput,
+        sum,
         dry,
         ringOsc,
-        ringMod,
         ringWet,
         feedbackDelay,
         feedbackWet,
@@ -746,7 +717,6 @@
         echoWet,
         delay,
         delayWet,
-        reverb,
         reverbWet,
         invertWet,
         comb,
@@ -766,7 +736,7 @@
         autoWah,
         autoWahWet,
         frequencyShifter,
-        frequencyShifterWet,
+        frequencyShiftWet,
         pitchShift,
         pitchShiftWet,
         stereoWidener,
@@ -777,117 +747,97 @@
         freeverbWet,
         jcReverb,
         jcReverbWet,
-        eq,
-        preSafetyGain,
-        normalizer,
-        limiter
+        eq
       };
     }
 
     function applyEffectValues(rack, values) {
       if (!rack) return;
 
-      const ring = clamp(Number(values.ring) || 0, 0, 1);
-      const feedback = clamp(Number(values.feedback) || 0, 0, 1);
-      const echo = clamp(Number(values.echo) || 0, 0, 1);
-      const delay = clamp(Number(values.delay) || 0, 0, 1);
-      const reverb = clamp(Number(values.reverb) || 0, 0, 1);
-      const reverse = clamp(Number(values.reverse) || 0, 0, 1);
-      const comb = clamp(Number(values.comb) || 0, 0, 1);
-      const eqLow = clamp(Number(values.eqLow) || 0, 0, 1);
-      const eqMid = clamp(Number(values.eqMid) || 0, 0, 1);
-      const eqHigh = clamp(Number(values.eqHigh) || 0, 0, 1);
+      const v = {};
+      Object.keys(EFFECT_DEFAULTS).forEach((key) => {
+        v[key] = clamp(Number(values[key]) || 0, 0, 1);
+      });
 
-      const distortion = clamp(Number(values.distortion) || 0, 0, 1);
-      const bitCrusher = clamp(Number(values.bitCrusher) || 0, 0, 1);
-      const chorus = clamp(Number(values.chorus) || 0, 0, 1);
-      const phaser = clamp(Number(values.phaser) || 0, 0, 1);
-      const tremolo = clamp(Number(values.tremolo) || 0, 0, 1);
-      const vibrato = clamp(Number(values.vibrato) || 0, 0, 1);
-      const autoWah = clamp(Number(values.autoWah) || 0, 0, 1);
-      const frequencyShifter = clamp(Number(values.frequencyShifter) || 0, 0, 1);
-      const pitchShift = clamp(Number(values.pitchShift) || 0, 0, 1);
-      const stereoWidener = clamp(Number(values.stereoWidener) || 0, 0, 1);
-      const chebyshev = clamp(Number(values.chebyshev) || 0, 0, 1);
-      const freeverb = clamp(Number(values.freeverb) || 0, 0, 1);
-      const jcReverb = clamp(Number(values.jcReverb) || 0, 0, 1);
+      safeRamp(rack.ringWet.gain, v.ring);
+      safeRamp(rack.ringOsc.frequency, 20 + v.ring * 480);
 
-      safeRamp(rack.ringWet.gain, ring);
-      safeRamp(rack.ringOsc.frequency, 20 + ring * 480);
+      safeRamp(rack.feedbackDelay.feedback, v.feedback * 0.85);
+      safeRamp(rack.feedbackWet.gain, v.feedback);
 
-      safeRamp(rack.feedbackDelay.feedback, feedback * 0.85);
-      safeRamp(rack.feedbackWet.gain, feedback);
+      safeRamp(rack.echo.feedback, v.echo * 0.8);
+      safeRamp(rack.echoWet.gain, v.echo);
 
-      safeRamp(rack.echo.feedback, echo * 0.8);
-      safeRamp(rack.echoWet.gain, echo);
+      safeRamp(rack.delay.delayTime, 0.03 + v.delay * 0.75);
+      safeRamp(rack.delayWet.gain, v.delay);
 
-      safeRamp(rack.delay.delayTime, 0.03 + delay * 0.75);
-      safeRamp(rack.delayWet.gain, delay);
+      safeRamp(rack.reverbWet.gain, v.reverb);
+      safeRamp(rack.invertWet.gain, v.reverse);
 
-      safeRamp(rack.reverbWet.gain, reverb);
+      safeRamp(rack.comb.resonance, v.comb * 0.95);
+      safeRamp(rack.comb.delayTime, 0.015 + v.comb * 0.12);
+      safeRamp(rack.combWet.gain, v.comb);
 
-      safeRamp(rack.invertWet.gain, reverse);
+      safeRamp(rack.eq.low, v.eqLow * 12);
+      safeRamp(rack.eq.mid, v.eqMid * 12);
+      safeRamp(rack.eq.high, v.eqHigh * 12);
 
-      safeRamp(rack.comb.resonance, comb * 0.95);
-      safeRamp(rack.comb.delayTime, 0.015 + comb * 0.12);
-      safeRamp(rack.combWet.gain, comb);
+      if (rack.distortion) rack.distortion.distortion = 0.05 + v.distortion * 0.95;
+      safeRamp(rack.distortionWet.gain, v.distortion);
 
-      safeRamp(rack.distortion.distortion, distortion * 0.95);
-      safeRamp(rack.distortionWet.gain, distortion);
+      if (rack.bitCrusher) rack.bitCrusher.bits = Math.max(1, Math.round(16 - v.bitCrusher * 14));
+      safeRamp(rack.bitCrusherWet.gain, v.bitCrusher);
 
-      // BitCrusher is strongest at low bit depth. At 0 it is silent; as the slider rises, it becomes crunchier.
-      if (rack.bitCrusher && "bits" in rack.bitCrusher) {
-        rack.bitCrusher.bits = Math.round(16 - bitCrusher * 14);
+      if (rack.chorus) {
+        safeRamp(rack.chorus.frequency, 0.1 + v.chorus * 8);
+        if (rack.chorus.depth !== undefined) rack.chorus.depth = v.chorus;
       }
-      safeRamp(rack.bitCrusherWet.gain, bitCrusher);
+      safeRamp(rack.chorusWet.gain, v.chorus);
 
-      safeRamp(rack.chorus.frequency, 0.1 + chorus * 8);
-      if (rack.chorus && "depth" in rack.chorus) rack.chorus.depth = 0.1 + chorus * 0.9;
-      safeRamp(rack.chorusWet.gain, chorus);
-
-      safeRamp(rack.phaser.frequency, 0.05 + phaser * 4);
-      safeRamp(rack.phaserWet.gain, phaser);
-
-      safeRamp(rack.tremolo.frequency, 0.5 + tremolo * 18);
-      if (rack.tremolo && "depth" in rack.tremolo) safeRamp(rack.tremolo.depth, tremolo);
-      safeRamp(rack.tremoloWet.gain, tremolo);
-
-      safeRamp(rack.vibrato.frequency, 0.5 + vibrato * 12);
-      if (rack.vibrato && "depth" in rack.vibrato) safeRamp(rack.vibrato.depth, vibrato * 0.5);
-      safeRamp(rack.vibratoWet.gain, vibrato);
-
-      safeRamp(rack.autoWah.baseFrequency, 50 + autoWah * 1200);
-      if (rack.autoWah && "octaves" in rack.autoWah) rack.autoWah.octaves = 2 + autoWah * 6;
-      safeRamp(rack.autoWahWet.gain, autoWah);
-
-      safeRamp(rack.frequencyShifter.frequency, -600 + frequencyShifter * 1200);
-      safeRamp(rack.frequencyShifterWet.gain, frequencyShifter);
-
-      if (rack.pitchShift && "pitch" in rack.pitchShift) {
-        rack.pitchShift.pitch = Math.round(-12 + pitchShift * 24);
+      if (rack.phaser) {
+        safeRamp(rack.phaser.frequency, 0.1 + v.phaser * 6);
+        if (rack.phaser.octaves !== undefined) rack.phaser.octaves = 1 + v.phaser * 5;
       }
-      safeRamp(rack.pitchShiftWet.gain, pitchShift);
+      safeRamp(rack.phaserWet.gain, v.phaser);
 
-      if (rack.stereoWidener && "width" in rack.stereoWidener) safeRamp(rack.stereoWidener.width, stereoWidener);
-      safeRamp(rack.stereoWidenerWet.gain, stereoWidener);
-
-      if (rack.chebyshev && "order" in rack.chebyshev) {
-        rack.chebyshev.order = Math.round(1 + chebyshev * 99);
+      if (rack.tremolo) {
+        safeRamp(rack.tremolo.frequency, 1 + v.tremolo * 18);
+        if (rack.tremolo.depth !== undefined) rack.tremolo.depth = v.tremolo;
       }
-      safeRamp(rack.chebyshevWet.gain, chebyshev);
+      safeRamp(rack.tremoloWet.gain, v.tremolo);
 
-      safeRamp(rack.freeverb.roomSize, freeverb);
-      safeRamp(rack.freeverb.dampening, 1000 + freeverb * 7000);
-      safeRamp(rack.freeverbWet.gain, freeverb);
+      if (rack.vibrato) {
+        safeRamp(rack.vibrato.frequency, 1 + v.vibrato * 10);
+        if (rack.vibrato.depth !== undefined) rack.vibrato.depth = v.vibrato * 0.5;
+      }
+      safeRamp(rack.vibratoWet.gain, v.vibrato);
 
-      safeRamp(rack.jcReverb.roomSize, jcReverb);
-      safeRamp(rack.jcReverbWet.gain, jcReverb);
+      if (rack.autoWah) {
+        safeRamp(rack.autoWah.baseFrequency, 60 + v.autoWah * 1200);
+        if (rack.autoWah.Q !== undefined) rack.autoWah.Q.value = 1 + v.autoWah * 8;
+      }
+      safeRamp(rack.autoWahWet.gain, v.autoWah);
 
-      // EQ sliders start at 0 visually, and 0 means no boost/cut.
-      // Moving the slider upward adds gain up to +12 dB.
-      safeRamp(rack.eq.low, eqLow * 12);
-      safeRamp(rack.eq.mid, eqMid * 12);
-      safeRamp(rack.eq.high, eqHigh * 12);
+      if (rack.frequencyShifter) safeRamp(rack.frequencyShifter.frequency, -400 + v.frequencyShift * 800);
+      safeRamp(rack.frequencyShiftWet.gain, v.frequencyShift);
+
+      if (rack.pitchShift) rack.pitchShift.pitch = Math.round(-12 + v.pitchShift * 24);
+      safeRamp(rack.pitchShiftWet.gain, v.pitchShift);
+
+      if (rack.stereoWidener) safeRamp(rack.stereoWidener.width, v.stereoWidener);
+      safeRamp(rack.stereoWidenerWet.gain, v.stereoWidener);
+
+      if (rack.chebyshev) rack.chebyshev.order = Math.max(1, Math.round(1 + v.chebyshev * 49));
+      safeRamp(rack.chebyshevWet.gain, v.chebyshev);
+
+      if (rack.freeverb) {
+        safeRamp(rack.freeverb.roomSize, v.freeverb);
+        safeRamp(rack.freeverb.dampening, 500 + v.freeverb * 7000);
+      }
+      safeRamp(rack.freeverbWet.gain, v.freeverb);
+
+      if (rack.jcReverb) safeRamp(rack.jcReverb.roomSize, v.jcReverb);
+      safeRamp(rack.jcReverbWet.gain, v.jcReverb);
     }
 
     function makeSlider(parentId, effectObject, effectKey, onChange) {
@@ -914,6 +864,10 @@
       function updateDisplay() {
         if (effectKey.startsWith("eq")) {
           value.textContent = Math.round(Number(input.value) * 12) + " dB";
+        } else if (effectKey === "pitchShift") {
+          value.textContent = Math.round(-12 + Number(input.value) * 24) + " st";
+        } else if (effectKey === "frequencyShift") {
+          value.textContent = Math.round(-400 + Number(input.value) * 800) + " Hz";
         } else {
           value.textContent = Math.round(Number(input.value) * 100) + "%";
         }
@@ -934,9 +888,16 @@
     }
 
     function createSliders(parentId, effectObject, onChange) {
-      Object.keys(EFFECT_DEFAULTS).forEach((key) => {
-        makeSlider(parentId, effectObject, key, onChange);
+      Object.keys(EFFECT_DEFAULTS).forEach((key) => makeSlider(parentId, effectObject, key, onChange));
+    }
+
+    function resetSliders(parentId, effectObject, rack) {
+      Object.keys(EFFECT_DEFAULTS).forEach((key) => { effectObject[key] = 0; });
+      document.querySelectorAll(`#${parentId} input[type="range"]`).forEach((slider) => {
+        slider.value = 0;
+        slider.dispatchEvent(new Event("input"));
       });
+      applyEffectValues(rack, effectObject);
     }
 
     function createFileDecks() {
@@ -958,176 +919,17 @@
             Upload audio file
             <input type="file" accept="audio/*" data-file-input="${index}" />
           </label>
-          <button id="play-file-${index}" disabled>Play</button>
+          <div class="mini-row">
+            <button id="play-file-${index}" disabled>Play</button>
+            <button class="secondary" id="loop-file-${index}" disabled>Loop Off</button>
+          </div>
         `;
         container.appendChild(deck);
       }
     }
 
-    function findAvailableRecordingBufferIndex() {
-      const emptyIndex = recordingBuffers.findIndex((buffer) => buffer === null);
-      if (emptyIndex !== -1) return emptyIndex;
-
-      const index = nextRecordingBufferIndex;
-      nextRecordingBufferIndex = (nextRecordingBufferIndex + 1) % recordingBuffers.length;
-      return index;
-    }
-
-    function updateRecordingBufferButton(index) {
-      const playButton = document.getElementById(`play-buffer-${index}`);
-      const deleteButton = document.getElementById(`delete-buffer-${index}`);
-      const label = document.getElementById(`buffer-label-${index}`);
-
-      if (!playButton || !deleteButton || !label) return;
-
-      if (recordingBuffers[index]) {
-        playButton.disabled = false;
-        deleteButton.disabled = false;
-        label.textContent = recordingBuffers[index].name;
-      } else {
-        playButton.disabled = true;
-        deleteButton.disabled = true;
-        playButton.textContent = `Play Buffer ${index + 1}`;
-        playButton.classList.remove("green");
-        label.textContent = "Empty";
-      }
-    }
-
-    function saveRecordingToBuffer(blob) {
-      const index = findAvailableRecordingBufferIndex();
-
-      if (recordingBufferPlayers[index]) {
-        recordingBufferPlayers[index].stop();
-        recordingBufferPlayers[index].dispose();
-        recordingBufferPlayers[index] = null;
-      }
-
-      const url = URL.createObjectURL(blob);
-      recordingBuffers[index] = {
-        blob,
-        url,
-        name: `Recording Buffer ${index + 1}`
-      };
-
-      const player = new Tone.Player({
-        url,
-        loop: false,
-        autostart: false,
-        onstop: () => {
-          const playButton = document.getElementById(`play-buffer-${index}`);
-          if (playButton) {
-            playButton.textContent = `Play Buffer ${index + 1}`;
-            playButton.classList.remove("green");
-          }
-        }
-      });
-
-      player.connect(micRack.input);
-      recordingBufferPlayers[index] = player;
-      nextRecordingBufferIndex = (index + 1) % recordingBuffers.length;
-      updateRecordingBufferButton(index);
-      setStatus(`Recording saved to buffer ${index + 1}.`, true);
-    }
-
-    async function toggleRecordingBufferPlayback(index) {
-      await Tone.start();
-      await Tone.context.resume();
-
-      // When playing any saved buffer, turn off live microphone monitoring first.
-      // This helps prevent the buffer playback from entering the mic and causing feedback.
-      if (micOn && mic) {
-        mic.close();
-        mic.dispose();
-        mic = null;
-        micOn = false;
-        micButton.textContent = "Turn Mic On";
-        micButton.classList.remove("green");
-        recordButton.disabled = true;
-      }
-
-      const player = recordingBufferPlayers[index];
-      const playButton = document.getElementById(`play-buffer-${index}`);
-
-      if (!player || !recordingBuffers[index]) {
-        setStatus(`Buffer ${index + 1} is empty.`);
-        return;
-      }
-
-      if (player.state === "started") {
-        player.stop();
-        if (playButton) {
-          playButton.textContent = `Play Buffer ${index + 1}`;
-          playButton.classList.remove("green");
-        }
-        setStatus(`Stopped buffer ${index + 1}.`);
-      } else {
-        player.start();
-        if (playButton) {
-          playButton.textContent = `Stop Buffer ${index + 1}`;
-          playButton.classList.add("green");
-        }
-        setStatus(`Playing buffer ${index + 1} through microphone/recording effects. Microphone is off to prevent feedback.`, true);
-      }
-    }
-
-    function deleteRecordingBuffer(index) {
-      if (recordingBufferPlayers[index]) {
-        recordingBufferPlayers[index].stop();
-        recordingBufferPlayers[index].dispose();
-        recordingBufferPlayers[index] = null;
-      }
-
-      if (recordingBuffers[index]?.url) {
-        URL.revokeObjectURL(recordingBuffers[index].url);
-      }
-
-      recordingBuffers[index] = null;
-      nextRecordingBufferIndex = index;
-      updateRecordingBufferButton(index);
-      setStatus(`Buffer ${index + 1} deleted. The next saved recording will use this space.`, true);
-    }
-
-    function createRecordingBufferButtons() {
-      const container = document.getElementById("recording-buffer-buttons");
-      if (!container) return;
-
-      container.innerHTML = "";
-
-      for (let index = 0; index < recordingBuffers.length; index++) {
-        const bufferCard = document.createElement("div");
-        bufferCard.className = "buffer-card";
-        bufferCard.innerHTML = `
-          <div class="buffer-top">
-            <strong>Buffer ${index + 1}</strong>
-            <span id="buffer-label-${index}">Empty</span>
-          </div>
-          <button class="buffer-button" id="play-buffer-${index}" disabled>Play Buffer ${index + 1}</button>
-          <button class="buffer-button secondary" id="delete-buffer-${index}" disabled>Delete</button>
-        `;
-        container.appendChild(bufferCard);
-
-        document.getElementById(`play-buffer-${index}`).addEventListener("click", () => toggleRecordingBufferPlayback(index));
-        document.getElementById(`delete-buffer-${index}`).addEventListener("click", () => deleteRecordingBuffer(index));
-      }
-    }
-
-    function resetSliders(parentId, effectObject, rack) {
-      Object.keys(EFFECT_DEFAULTS).forEach((key) => {
-        effectObject[key] = 0;
-      });
-
-      const sliders = document.querySelectorAll(`#${parentId} input[type="range"]`);
-      sliders.forEach((slider) => {
-        slider.value = 0;
-        slider.dispatchEvent(new Event("input"));
-      });
-
-      applyEffectValues(rack, effectObject);
-    }
-
     async function loadAudioFile(index, file) {
       if (!file) return;
-
       await Tone.start();
       await Tone.context.resume();
 
@@ -1140,12 +942,12 @@
       filePlaying[index] = false;
       document.getElementById(`file-name-${index}`).textContent = "Loading: " + file.name;
       document.getElementById(`play-file-${index}`).disabled = true;
-      document.getElementById(`play-file-${index}`).textContent = "Loading...";
+      document.getElementById(`loop-file-${index}`).disabled = true;
       document.getElementById(`file-indicator-${index}`).classList.remove("green");
 
       players[index] = new Tone.Player({
-        url: url,
-        loop: true,
+        url,
+        loop: fileLooping[index],
         autostart: false,
         fadeIn: 0.02,
         fadeOut: 0.02,
@@ -1153,13 +955,16 @@
           players[index].connect(fileRack.input);
           document.getElementById(`file-name-${index}`).textContent = file.name;
           document.getElementById(`play-file-${index}`).disabled = false;
-          document.getElementById(`play-file-${index}`).textContent = "Play";
+          document.getElementById(`loop-file-${index}`).disabled = false;
           setStatus("Audio file loaded. Press Play to hear it.", true);
+        },
+        onstop: () => {
+          filePlaying[index] = false;
+          document.getElementById(`play-file-${index}`).textContent = "Play";
+          document.getElementById(`file-indicator-${index}`).classList.remove("green");
         },
         onerror: () => {
           document.getElementById(`file-name-${index}`).textContent = "Could not load file";
-          document.getElementById(`play-file-${index}`).disabled = true;
-          document.getElementById(`play-file-${index}`).textContent = "Play";
           setStatus("This audio file could not be loaded. Try WAV, MP3, M4A, or OGG.");
         }
       });
@@ -1168,7 +973,6 @@
     async function toggleFilePlayback(index) {
       await Tone.start();
       await Tone.context.resume();
-
       const player = players[index];
       if (!player || !player.loaded) {
         setStatus("The audio file is still loading.");
@@ -1178,13 +982,10 @@
       const button = document.getElementById(`play-file-${index}`);
       const indicator = document.getElementById(`file-indicator-${index}`);
 
-      if (filePlaying[index]) {
+      if (filePlaying[index] || player.state === "started") {
         player.stop();
-        filePlaying[index] = false;
-        button.textContent = "Play";
-        indicator.classList.remove("green");
-        setStatus("Audio file stopped.");
       } else {
+        player.loop = fileLooping[index];
         player.start();
         filePlaying[index] = true;
         button.textContent = "Stop";
@@ -1193,21 +994,33 @@
       }
     }
 
+    function toggleFileLoop(index) {
+      fileLooping[index] = !fileLooping[index];
+      if (players[index]) players[index].loop = fileLooping[index];
+      const button = document.getElementById(`loop-file-${index}`);
+      button.textContent = fileLooping[index] ? "Loop On" : "Loop Off";
+      button.classList.toggle("loop-on", fileLooping[index]);
+      button.classList.toggle("secondary", !fileLooping[index]);
+    }
+
+    function turnMicOffForPlayback() {
+      if (micOn && mic) {
+        mic.close();
+        mic.dispose();
+        mic = null;
+        micOn = false;
+        micButton.textContent = "Turn Mic On";
+        micButton.classList.remove("green");
+        recordButton.disabled = true;
+      }
+    }
+
     async function toggleMic() {
       await Tone.start();
       await Tone.context.resume();
 
       if (micOn) {
-        if (mic) {
-          mic.close();
-          mic.dispose();
-          mic = null;
-        }
-
-        micOn = false;
-        micButton.textContent = "Turn Mic On";
-        micButton.classList.remove("green");
-        recordButton.disabled = true;
+        turnMicOffForPlayback();
         setStatus("Microphone is off.");
         return;
       }
@@ -1245,27 +1058,20 @@
         safeRamp(recordingInputGain.gain, 0, 0.2);
         await wait(220);
         const blob = await recorder.stop();
-        const keepRecording = window.confirm("Do you want to keep this recording in one of the 8 recording buffers?");
         const url = URL.createObjectURL(blob);
 
-        if (recordedPlayer) {
-          recordedPlayer.dispose();
-        }
-
+        if (recordedPlayer) recordedPlayer.dispose();
         recordedPlayer = new Tone.Player({
-          url: url,
+          url,
           loop: false,
           autostart: false,
-          onload: () => {
-            playRecordingButton.disabled = false;
-          },
+          onload: () => { playRecordingButton.disabled = false; },
           onstop: () => {
             isRecordingPlaying = false;
-            playRecordingButton.textContent = "Play Recording";
+            playRecordingButton.textContent = "Play Latest Recording";
             playRecordingButton.classList.remove("green");
           }
         });
-
         recordedPlayer.connect(micRack.input);
 
         isRecording = false;
@@ -1274,20 +1080,19 @@
         recordButton.classList.remove("red");
         recordButton.disabled = false;
         playRecordingButton.disabled = false;
-        if (keepRecording) {
+
+        const shouldKeepRecording = window.confirm("Do you want to keep this recording in one of the 8 buffers?");
+        if (shouldKeepRecording) {
           saveRecordingToBuffer(blob);
         } else {
-          setStatus("Recording discarded. Playback is still ready temporarily in the main playback button.", true);
+          setStatus("Recording finished but was not saved to a buffer.");
         }
         return;
       }
 
-      if (recordedPlayer) {
-        recordedPlayer.stop();
-      }
-
+      if (recordedPlayer) recordedPlayer.stop();
       isRecordingPlaying = false;
-      playRecordingButton.textContent = "Play Recording";
+      playRecordingButton.textContent = "Play Latest Recording";
       playRecordingButton.classList.remove("green");
 
       countdownInProgress = true;
@@ -1316,37 +1121,277 @@
     async function playRecording() {
       await Tone.start();
       await Tone.context.resume();
-
-      // When playing the recorded clip, turn off live microphone monitoring first.
-      // This helps prevent speaker playback from entering the mic again.
-      if (micOn && mic) {
-        mic.close();
-        mic.dispose();
-        mic = null;
-        micOn = false;
-        micButton.textContent = "Turn Mic On";
-        micButton.classList.remove("green");
-        recordButton.disabled = true;
-      }
+      turnMicOffForPlayback();
 
       if (!recordedPlayer || !recordedPlayer.loaded || isRecording) {
         setStatus("Recording is not ready yet.");
         return;
       }
 
-      if (isRecordingPlaying) {
+      if (isRecordingPlaying || recordedPlayer.state === "started") {
         recordedPlayer.stop();
-        isRecordingPlaying = false;
-        playRecordingButton.textContent = "Play Recording";
-        playRecordingButton.classList.remove("green");
-        setStatus("Recording playback stopped.");
       } else {
         recordedPlayer.start();
         isRecordingPlaying = true;
-        playRecordingButton.textContent = "Stop Playback";
+        playRecordingButton.textContent = "Stop Latest Recording";
         playRecordingButton.classList.add("green");
         setStatus("Playing recorded audio. Microphone is off to prevent feedback.", true);
       }
+    }
+
+    function findAvailableRecordingBufferIndex() {
+      const emptyIndex = recordingBuffers.findIndex((buffer) => buffer === null);
+      if (emptyIndex !== -1) return emptyIndex;
+      const index = nextRecordingBufferIndex;
+      nextRecordingBufferIndex = (nextRecordingBufferIndex + 1) % recordingBuffers.length;
+      return index;
+    }
+
+    function updateRecordingBufferButton(index) {
+      const playButton = document.getElementById(`play-buffer-${index}`);
+      const loopButton = document.getElementById(`loop-buffer-${index}`);
+      const deleteButton = document.getElementById(`delete-buffer-${index}`);
+      const label = document.getElementById(`buffer-label-${index}`);
+      if (!playButton || !loopButton || !deleteButton || !label) return;
+
+      if (recordingBuffers[index]) {
+        playButton.disabled = false;
+        loopButton.disabled = false;
+        deleteButton.disabled = false;
+        label.textContent = recordingBuffers[index].name;
+      } else {
+        playButton.disabled = true;
+        loopButton.disabled = true;
+        deleteButton.disabled = true;
+        playButton.textContent = `Play Buffer ${index + 1}`;
+        playButton.classList.remove("green");
+        loopButton.textContent = "Loop Off";
+        loopButton.classList.remove("loop-on");
+        loopButton.classList.add("secondary");
+        recordingBufferLooping[index] = false;
+        label.textContent = "Empty";
+      }
+    }
+
+    function saveRecordingToBuffer(blob) {
+      const index = findAvailableRecordingBufferIndex();
+
+      if (recordingBufferPlayers[index]) {
+        recordingBufferPlayers[index].stop();
+        recordingBufferPlayers[index].dispose();
+        recordingBufferPlayers[index] = null;
+      }
+      if (recordingBuffers[index]?.url) URL.revokeObjectURL(recordingBuffers[index].url);
+
+      const url = URL.createObjectURL(blob);
+      recordingBuffers[index] = { blob, url, name: `Recording Buffer ${index + 1}` };
+
+      const player = new Tone.Player({
+        url,
+        loop: recordingBufferLooping[index],
+        autostart: false,
+        onstop: () => {
+          const playButton = document.getElementById(`play-buffer-${index}`);
+          if (playButton) {
+            playButton.textContent = `Play Buffer ${index + 1}`;
+            playButton.classList.remove("green");
+          }
+        }
+      });
+      player.connect(micRack.input);
+      recordingBufferPlayers[index] = player;
+      nextRecordingBufferIndex = (index + 1) % recordingBuffers.length;
+      updateRecordingBufferButton(index);
+      setStatus(`Recording saved to buffer ${index + 1}.`, true);
+    }
+
+    async function toggleRecordingBufferPlayback(index) {
+      await Tone.start();
+      await Tone.context.resume();
+      turnMicOffForPlayback();
+
+      const player = recordingBufferPlayers[index];
+      const playButton = document.getElementById(`play-buffer-${index}`);
+
+      if (!player || !recordingBuffers[index]) {
+        setStatus(`Buffer ${index + 1} is empty.`);
+        return;
+      }
+
+      if (player.state === "started") {
+        player.stop();
+      } else {
+        player.loop = recordingBufferLooping[index];
+        player.start();
+        if (playButton) {
+          playButton.textContent = `Stop Buffer ${index + 1}`;
+          playButton.classList.add("green");
+        }
+        setStatus(`Playing buffer ${index + 1} through microphone/recording effects. Microphone is off to prevent feedback.`, true);
+      }
+    }
+
+    function toggleRecordingBufferLoop(index) {
+      recordingBufferLooping[index] = !recordingBufferLooping[index];
+      if (recordingBufferPlayers[index]) recordingBufferPlayers[index].loop = recordingBufferLooping[index];
+      const button = document.getElementById(`loop-buffer-${index}`);
+      button.textContent = recordingBufferLooping[index] ? "Loop On" : "Loop Off";
+      button.classList.toggle("loop-on", recordingBufferLooping[index]);
+      button.classList.toggle("secondary", !recordingBufferLooping[index]);
+    }
+
+    function deleteRecordingBuffer(index) {
+      if (recordingBufferPlayers[index]) {
+        recordingBufferPlayers[index].stop();
+        recordingBufferPlayers[index].dispose();
+        recordingBufferPlayers[index] = null;
+      }
+      if (recordingBuffers[index]?.url) URL.revokeObjectURL(recordingBuffers[index].url);
+      recordingBuffers[index] = null;
+      nextRecordingBufferIndex = index;
+      updateRecordingBufferButton(index);
+      setStatus(`Buffer ${index + 1} deleted. The next saved recording will use this space.`, true);
+    }
+
+    function createRecordingBufferButtons() {
+      const container = document.getElementById("recording-buffer-buttons");
+      container.innerHTML = "";
+
+      for (let index = 0; index < RECORDING_BUFFER_COUNT; index++) {
+        const bufferCard = document.createElement("div");
+        bufferCard.className = "buffer-card";
+        bufferCard.innerHTML = `
+          <div class="buffer-top">
+            <strong>Buffer ${index + 1}</strong>
+            <span id="buffer-label-${index}">Empty</span>
+          </div>
+          <button id="play-buffer-${index}" disabled>Play Buffer ${index + 1}</button>
+          <button class="secondary" id="loop-buffer-${index}" disabled>Loop Off</button>
+          <button class="secondary" id="delete-buffer-${index}" disabled>Delete</button>
+        `;
+        container.appendChild(bufferCard);
+
+        document.getElementById(`play-buffer-${index}`).addEventListener("click", () => toggleRecordingBufferPlayback(index));
+        document.getElementById(`loop-buffer-${index}`).addEventListener("click", () => toggleRecordingBufferLoop(index));
+        document.getElementById(`delete-buffer-${index}`).addEventListener("click", () => deleteRecordingBuffer(index));
+      }
+    }
+
+    async function startMasterRecording() {
+      await Tone.start();
+      await Tone.context.resume();
+      if (masterRecording) return;
+
+      if (masterRecordingUrl) {
+        URL.revokeObjectURL(masterRecordingUrl);
+        masterRecordingUrl = null;
+      }
+      masterRecordingBlob = null;
+      masterSaveButton.disabled = true;
+
+      safeRamp(masterRecorderGain.gain, 0, 0.01);
+      await masterRecorder.start();
+      safeRamp(masterRecorderGain.gain, 1, 0.2);
+      masterRecording = true;
+      masterRecordButton.disabled = true;
+      masterStopButton.disabled = false;
+      masterRecordButton.classList.add("red");
+      setStatus("Master track is recording the full jam mix.", true);
+    }
+
+    async function stopMasterRecording() {
+      if (!masterRecording) return;
+      masterStopButton.disabled = true;
+      safeRamp(masterRecorderGain.gain, 0, 0.2);
+      await wait(220);
+      masterRecordingBlob = await masterRecorder.stop();
+      masterRecordingUrl = URL.createObjectURL(masterRecordingBlob);
+      masterRecording = false;
+      masterRecordButton.disabled = false;
+      masterRecordButton.classList.remove("red");
+      masterSaveButton.disabled = false;
+      setStatus("Master recording is ready to save.", true);
+    }
+
+    function audioBufferToWavBlob(audioBuffer) {
+      const numberOfChannels = audioBuffer.numberOfChannels;
+      const sampleRate = audioBuffer.sampleRate;
+      const length = audioBuffer.length;
+      const bytesPerSample = 2;
+      const blockAlign = numberOfChannels * bytesPerSample;
+      const wavBuffer = new ArrayBuffer(44 + length * blockAlign);
+      const view = new DataView(wavBuffer);
+
+      function writeString(offset, string) {
+        for (let i = 0; i < string.length; i++) {
+          view.setUint8(offset + i, string.charCodeAt(i));
+        }
+      }
+
+      writeString(0, "RIFF");
+      view.setUint32(4, 36 + length * blockAlign, true);
+      writeString(8, "WAVE");
+      writeString(12, "fmt ");
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true);
+      view.setUint16(22, numberOfChannels, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * blockAlign, true);
+      view.setUint16(32, blockAlign, true);
+      view.setUint16(34, bytesPerSample * 8, true);
+      writeString(36, "data");
+      view.setUint32(40, length * blockAlign, true);
+
+      let offset = 44;
+      for (let i = 0; i < length; i++) {
+        for (let channel = 0; channel < numberOfChannels; channel++) {
+          const sample = Math.max(-1, Math.min(1, audioBuffer.getChannelData(channel)[i]));
+          view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7fff, true);
+          offset += 2;
+        }
+      }
+
+      return new Blob([view], { type: "audio/wav" });
+    }
+
+    async function saveMasterRecording() {
+      if (!masterRecordingBlob) {
+        setStatus("No master recording is ready to save.");
+        return;
+      }
+
+      try {
+        masterSaveButton.disabled = true;
+        setStatus("Converting master recording to WAV...", true);
+
+        const arrayBuffer = await masterRecordingBlob.arrayBuffer();
+        const audioContext = new AudioContext();
+        const decodedBuffer = await audioContext.decodeAudioData(arrayBuffer.slice(0));
+        const wavBlob = audioBufferToWavBlob(decodedBuffer);
+        const wavUrl = URL.createObjectURL(wavBlob);
+
+        const link = document.createElement("a");
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+        link.href = wavUrl;
+        link.download = `tone-js-jam-master-${timestamp}.wav`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(wavUrl), 1000);
+        await audioContext.close();
+        setStatus("Master recording saved to disk as WAV.", true);
+      } catch (error) {
+        setStatus("Could not convert to WAV. Try recording again or use a browser with Web Audio decoding support.");
+      } finally {
+        masterSaveButton.disabled = false;
+      }
+    }
+
+    function updateMasterVolume() {
+      const value = Number(masterVolumeSlider.value);
+      safeRamp(masterVolume.gain, value, 0.05);
+      masterVolumeValue.textContent = Math.round(value * 100) + "%";
     }
 
     function init() {
@@ -1355,11 +1400,23 @@
         return;
       }
 
+      masterInput = new Tone.Gain(1);
+      masterVolume = new Tone.Gain(Number(masterVolumeSlider.value));
+      masterLimiter = new Tone.Limiter(-1);
+      masterRecorder = new Tone.Recorder();
+
+      masterInput.connect(masterVolume);
+      masterVolume.connect(masterLimiter);
+      masterLimiter.toDestination();
+
+      masterRecorderGain = new Tone.Gain(0);
+      masterLimiter.connect(masterRecorderGain);
+      masterRecorderGain.connect(masterRecorder);
+
       fileRack = createEffectRack();
       micRack = createEffectRack();
       recorder = new Tone.Recorder();
       recordingInputGain = new Tone.Gain(0);
-      recordingSafetyOutput = createSafetyOutput();
 
       applyEffectValues(fileRack, fileEffects);
       applyEffectValues(micRack, micEffects);
@@ -1378,19 +1435,21 @@
 
       for (let index = 0; index < AUDIO_FILE_COUNT; index++) {
         document.getElementById(`play-file-${index}`).addEventListener("click", () => toggleFilePlayback(index));
+        document.getElementById(`loop-file-${index}`).addEventListener("click", () => toggleFileLoop(index));
       }
 
       micButton.addEventListener("click", toggleMic);
       recordButton.addEventListener("click", toggleRecording);
       playRecordingButton.addEventListener("click", playRecording);
 
-      document.getElementById("reset-file-effects").addEventListener("click", () => {
-        resetSliders("file-sliders", fileEffects, fileRack);
-      });
+      masterRecordButton.addEventListener("click", startMasterRecording);
+      masterStopButton.addEventListener("click", stopMasterRecording);
+      masterSaveButton.addEventListener("click", saveMasterRecording);
+      masterVolumeSlider.addEventListener("input", updateMasterVolume);
+      updateMasterVolume();
 
-      document.getElementById("reset-mic-effects").addEventListener("click", () => {
-        resetSliders("mic-sliders", micEffects, micRack);
-      });
+      document.getElementById("reset-file-effects").addEventListener("click", () => resetSliders("file-sliders", fileEffects, fileRack));
+      document.getElementById("reset-mic-effects").addEventListener("click", () => resetSliders("mic-sliders", micEffects, micRack));
     }
 
     window.addEventListener("DOMContentLoaded", init);
